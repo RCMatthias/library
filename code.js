@@ -7,17 +7,42 @@ function makeBook(title, pages, author, read){
         return ( ` ${title} by ${author} , ${pages} pages , ${read} `   )
     }
 }
+let myLibrary = [];
 
 const TheHobbit = new makeBook('The Hobbit', '295','J.R.R. Tolkien', 'not read yet')
-console.log(TheHobbit.info())
+const animalFarm = new makeBook('Animal Farm', '68','George Orwell', 'read')
+const theRoad = new makeBook('The Road', '180','Cormac McCarthy', 'read')
+
+myLibrary.push(theRoad, TheHobbit, theRoad)
+myLibrary.push(new makeBook('x', 'y', 'z', 'x'))
+
+
+console.table(myLibrary)
 
 
 
+document.addEventListener("DOMContentLoaded",() => {
+    createForm();
+})
 
+function createForm(){
+    let bookForm = document.getElementById("book");
+    bookForm.innerHTML = 
+`<form method="post"> 
+    <label for="title"> Title: </label>
+    <input type="text" name="title" id="title" oninvalid="this.setCustomValidity('Title cannot be blank')" required placeholder="Book title"><br>
+    <input type="checkbox" id="read" name="read" value="read" checked>
+    <label for="read">Read?</label>
+    <button type ="button" value = "submit"> Submit </button>
+    <button type="reset">Reset</button>
 
+</form>`
+}
 
+/* 
+${title.value}
+ */
 
-let myLibrary = [];
 
 //constructor
 function Book(title, pages, author, read) {
@@ -41,6 +66,7 @@ console.log(bookTitle)
 //do stuff here (user 's input gets stored into an array (using a form in HTML))
 function addBooktoLibrary(){
     //user input
+
 
     let newBook = {
         title: bookTitle,
