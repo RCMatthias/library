@@ -1,50 +1,88 @@
-function makeBook(title, pages, author, read){
-    this.title = title;
-    this.pages = pages;
-    this.author = author;
-    this.read = read, 
-    this.info = function(){
-        return ( ` ${title} by ${author} , ${pages} pages , ${read} `   )
-    }
-}
-let myLibrary = [];
+// button eventlistener for create book
+const addBtn = document.querySelector('.add');
+console.log(addBtn)
+addBtn.addEventListener('click', event => {
+    addBooktoLibrary();
+});
 
-const TheHobbit = new makeBook('The Hobbit', '295','J.R.R. Tolkien', 'not read yet')
-const animalFarm = new makeBook('Animal Farm', '68','George Orwell', 'read')
-const theRoad = new makeBook('The Road', '180','Cormac McCarthy', 'read')
-
-myLibrary.push(theRoad, TheHobbit, theRoad)
-myLibrary.push(new makeBook('x', 'y', 'z', 'x'))
+const bookDisplay = document.querySelector('.bookDisplay')
 
 
-console.table(myLibrary)
-
-
-
-document.addEventListener("DOMContentLoaded",() => {
-    createForm();
-})
-
-function createForm(){
-    let bookForm = document.getElementById("book");
-    bookForm.innerHTML = 
-`<form method="post"> 
-    <label for="title"> Title: </label>
-    <input type="text" name="title" id="title" oninvalid="this.setCustomValidity('Title cannot be blank')" required placeholder="Book title"><br>
-    <input type="checkbox" id="read" name="read" value="read" checked>
-    <label for="read">Read?</label>
-    <button type ="button" value = "submit"> Submit </button>
-    <button type="reset">Reset</button>
-
-</form>`
-}
 
 /* 
 ${title.value}
  */
+let myLibrary = [];
+
+//      LIB TESTING
+const TheHobbit = new Book('The Hobbit', '295','J.R.R. Tolkien', 'not read yet')
+const animalFarm = new Book('Animal Farm', '68','George Orwell', 'read')
+const theRoad = new Book('The Road', '180','Cormac McCarthy', 'read')
+
+myLibrary.push(theRoad, TheHobbit, theRoad)
+myLibrary.push(new Book('x', 'y', 'z', 'x'))
+
+console.table(myLibrary)
+printBooks()
+
+//show cards 
+/* into a div 
+ */
+
+function printBooks(){
+    myLibrary.forEach((element) =>{
+        let title = element.title;
+        let author = element.author;
+        let pages = element.pages;
+        let read = element.read;
+
+        const newDiv = document.createElement("div");
+        newDiv.classList.add('bookCard')
+        const newContent = document.createTextNode( ` ${title} by ${author} , ${pages} pages , ${read} `)
+        newContent.innerHTML += '<li>'
+        /*         newContent.innerHTML += `${title} <br> by ${author} , ${pages} pages , ${read} `;
+ */
+        newDiv.appendChild(newContent);
+        document.body.insertBefore(newDiv,bookDisplay);
+
+        <button type ="button" value = "add" class="add"> Add </button>
+
+        //add delete button (delete from dom + delete form mylibrary array 
+        //WHEN DELETING (from array): RERUN PRINTBOOK FUNC! 
+/*         bookDisplay.innerHTML += ` ${title} by ${author} , ${pages} pages , ${read} `
+ */        //create separate div for each element 
+    }
+)
+}
+//create card per object in array
+//print array value to screen
 
 
-//constructor
+// make new book 
+
+
+function addBooktoLibrary(){
+    //user input
+    let inputTitle = document.querySelector('#title');
+    let inputAuthor = document.querySelector('#author');
+    let inputPages = document.querySelector('#pages');
+
+    let newBook = Object.create(Book);
+    newBook.title = inputTitle.value;
+    newBook.author = inputAuthor.value;
+    newBook.pages = inputPages.value;
+
+    myLibrary.push(newBook)
+    console.log(myLibrary)
+    inputTitle.value = ""
+    inputAuthor.value = ""
+    inputPages.value = ""
+    printBooks(); 
+
+}
+
+
+//prototype Book constructor
 function Book(title, pages, author, read) {
     this.title = title;
     this.pages = pages;
@@ -52,11 +90,19 @@ function Book(title, pages, author, read) {
     this.read = read;
 }
 
-const bookTitle = `<li>Name: ${data.title}</li>`
-const bookPages = `<li>Pages: ${data.pages}</li>`
-const bookAuthor = `<li>Author: ${data.author}</li>`
-const bookRead = `<li>Read: ${data.read}</li>`
-console.log(bookTitle)
+
+/* function book(title, pages, author, read){
+    this.title = title;
+    this.pages = pages;
+    this.author = author;
+    this.read = read, 
+    this.info = function(){
+        return ( ` ${title} by ${author} , ${pages} pages , ${read} `   )
+    }
+}; */
+
+
+
 
 
 //ADD PREVENTDEFAULT TO EVENTLISTENER FOR SUBMIT BUTTON;
@@ -64,21 +110,6 @@ console.log(bookTitle)
 
 
 //do stuff here (user 's input gets stored into an array (using a form in HTML))
-function addBooktoLibrary(){
-    //user input
-
-
-    let newBook = {
-        title: bookTitle,
-        pages:bookPages,
-        author: bookAuthor,
-        read: bookRead,
-    }
-    //(use template literals to access the DOM! )
-
-    //push to array mylibrary
-    myLibrary.push(newBook)
-}
 
 
 //(use template literals to access the DOM! )
