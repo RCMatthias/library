@@ -4,9 +4,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 body{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    ;    
+    font-style: oblique;
     background-color: bisque;
-    font-size: 18px;
+    font-size: 1rem;
 }
 .title{
   font-size: 70px;
@@ -25,12 +27,26 @@ body{
                1px 20px 30px rgba(16, 16, 16, 0.3),
                1px 25px 50px rgba(16, 16, 16, 0.2);
 }
-
+.bookDisplay{
+    display: flex; 
+    justify-items: stretch;
+    align-items: stretch;
+    grid-gap: 12px;
+}
 .bookCard{
+        display:flex; 
+        align-items: flex-end;
+        flex-direction: row-reverse;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         border-radius: 5px; /* 5px rounded corners */
         border-radius: 5px 5px 0 0;
-
+    background-color: antiquewhite;
     
+}
+
+.deleteBtn{
+    margin-left: auto;
+    padding: auto;
+    align-self: right;
 }

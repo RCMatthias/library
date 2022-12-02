@@ -1,6 +1,5 @@
 // button eventlistener for create book
 const addBtn = document.querySelector('.add');
-console.log(addBtn)
 addBtn.addEventListener('click', event => {
     addBooktoLibrary();
 });
@@ -8,10 +7,6 @@ addBtn.addEventListener('click', event => {
 const bookDisplay = document.querySelector('.bookDisplay')
 
 
-
-/* 
-${title.value}
- */
 let myLibrary = [];
 
 //      LIB TESTING
@@ -19,41 +14,73 @@ const TheHobbit = new Book('The Hobbit', '295','J.R.R. Tolkien', 'not read yet')
 const animalFarm = new Book('Animal Farm', '68','George Orwell', 'read')
 const theRoad = new Book('The Road', '180','Cormac McCarthy', 'read')
 
-myLibrary.push(theRoad, TheHobbit, theRoad)
+myLibrary.push(theRoad, TheHobbit, animalFarm)
 myLibrary.push(new Book('x', 'y', 'z', 'x'))
 
 console.table(myLibrary)
 printBooks()
 
-//show cards 
-/* into a div 
- */
 
+function deleteBook(index){
+    myLibrary.splice(index, 1);
+    console.log(index)
+    //remove 1 element at the X position (index) 
+    //empty the div with books (refresh)
+    refreshBooklist();
+
+}
+function refreshBooklist(){
+    bookDisplay.innerHTML ="";
+    printBooks();
+}
+
+
+//show cards 
 function printBooks(){
-    myLibrary.forEach((element) =>{
+    bookDisplay.textContent ="";
+    myLibrary.forEach((element, index) =>{
         let title = element.title;
         let author = element.author;
         let pages = element.pages;
         let read = element.read;
+        element.id = index;
 
         const newDiv = document.createElement("div");
-        newDiv.classList.add('bookCard')
+            newDiv.classList.add('bookCard')
+            newDiv.setAttribute('data-index',element.id)
+            //give the new div a [data-index] that holds its index in the array)
         const newContent = document.createTextNode( ` ${title} by ${author} , ${pages} pages , ${read} `)
-        newContent.innerHTML += '<li>'
-        /*         newContent.innerHTML += `${title} <br> by ${author} , ${pages} pages , ${read} `;
- */
+        
+        newDiv.innerHTML += '<br> <button class="deleteBtn" type ="button" value = "delete" class="delete"> Delete </button> <br>'
         newDiv.appendChild(newContent);
-        document.body.insertBefore(newDiv,bookDisplay);
+        bookDisplay.appendChild(newDiv)
+/*         document.body.insertBefore(newDiv,bookDisplay);
+ */
 
-        <button type ="button" value = "add" class="add"> Add </button>
+        let delBtn = document.querySelector('.deleteBtn');
+        console.log(delBtn)
+        delBtn.addEventListener('click', e =>{
+        /*     e.target.parentNode.remove(); */
+            deleteBook(index);
+            }
+        )
+    })
+}
 
-        //add delete button (delete from dom + delete form mylibrary array 
+function changeRead(a){
+    myLibrary[a].read = (myLibrary[a].read = "read"? "not read":"read;")
+}
+
+
+       //add delete button (delete from dom + delete form mylibrary array 
         //WHEN DELETING (from array): RERUN PRINTBOOK FUNC! 
 /*         bookDisplay.innerHTML += ` ${title} by ${author} , ${pages} pages , ${read} `
  */        //create separate div for each element 
-    }
-)
-}
+
+
+
+
+
 //create card per object in array
 //print array value to screen
 
@@ -77,7 +104,7 @@ function addBooktoLibrary(){
     inputTitle.value = ""
     inputAuthor.value = ""
     inputPages.value = ""
-    printBooks(); 
+    refreshBooklist(); 
 
 }
 
@@ -88,6 +115,11 @@ function Book(title, pages, author, read) {
     this.pages = pages;
     this.author = author;
     this.read = read;
+    
+    function recommendBook(e) {
+        const index = this.parentElement.getAttribute('data-index');
+        myLibrary[this.parentElement.getAttribute('data-index')].recommend();}
+    
 }
 
 
