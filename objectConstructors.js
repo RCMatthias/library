@@ -24,14 +24,14 @@ addBookToLibrary("The Hebbit", "295", "JRR Tolkien", "Not read yet") */
 
 function printBooks(){
     const books = document.querySelector(".bookDisplay");
-    //loop over the lib array and send display to the cards 
-    const removeDivs = document.querySelectorAll('.bookCard');
+  
+  
+  const removeDivs = document.querySelectorAll('.bookCard');
         for (let i = 0; i<removeDivs.length; i++) {
             removeDivs[i].remove();
         }
-    
-let index = 0; 
-    myLibrary.forEach((element, index) =>{
+    let index = 0; 
+    myLibrary.forEach((element) =>{
 
         const card = document.createElement("div");
             card.classList.add("bookCard");
@@ -41,7 +41,6 @@ let index = 0;
             removeBookButton.classList.add("removeBookButton");
             removeBookButton.textContent = "Remove from Library";
             removeBookButton.dataset.linkedArray = index; 
-            index++;
             card.appendChild(removeBookButton)
 
 
@@ -53,7 +52,36 @@ let index = 0;
             myLibrary.splice(parseInt(retrieveBookToRemove), 1);
             card.remove();
             printBooks();
+            console.table(myLibrary)
         }
+
+        //start event listener/add button to toggle Read status 
+
+        const readStatusButton = document.createElement("button");
+        readStatusButton.classList.add("readStatusButton");
+        readStatusButton.textContent="Toggle Read Status";
+        
+        readStatusButton.dataset.linkedArray = index;
+        card.appendChild(readStatusButton);
+        
+        readStatusButton.addEventListener("click", toggleReadStatus)
+        
+        function toggleReadStatus(){
+            let retrieveBookToToggle = readStatusButton.dataset.linkedArray;
+            Book.prototype = Object.create(Book.prototype);
+            const toggleBook = new Book(); 
+            let Read = document.getElementById('read').checked;
+
+            if ((myLibrary[parseInt(retrieveBookToToggle)].Read == true)) {
+                toggleBook.Read = false ;
+                myLibrary[parseInt(retrieveBookToToggle)].Read = toggleBook.Read;
+            } else if ((myLibrary[parseInt(retrieveBookToToggle)].Read) == false){
+                toggleBook.Read = true;
+                myLibrary[parseInt(retrieveBookToToggle)].Read = toggleBook.Read;
+            }
+            printBooks();
+        }
+
 
         //loop over the object keys and values and display to each card
         for (let key in element){
@@ -61,12 +89,9 @@ let index = 0;
             para.textContent = (`${key}: ${element[key]}`);
             card.appendChild(para);
         }
+        index++;
     })}
 
-//adding a removebook button
-function createRemoveBookButton(){
-   
-}
 
 //display the form when clicking "add new book"
 const addBookButton = document.querySelector(".addBookButton")
@@ -74,6 +99,8 @@ const displayForm = () => {
     document.getElementById("addBookForm").style.display="";
 }
 addBookButton.addEventListener("click", displayForm);
+
+
 
 //start event listener/add input to array for new entry form
 const submitButton = document.getElementById("add")
@@ -105,22 +132,3 @@ clearButton.addEventListener("click", clearForm);
 function clearForm(){
     document.getElementById("resetButton");
 }
-
-       /*  let title = element.title;
-        let author = element.author;
-        let pages = element.pages;
-        let read = element.read;
-        element.id = index;
-
-        const newDiv = document.createElement("div");
-            newDiv.classList.add('bookCard')
-            newDiv.setAttribute('data-index',element.id)
-            //give the new div a [data-index] that holds its index in the array)
-        const newContent = document.createTextNode( ` ${title} by ${author} , ${pages} pages , ${read} `)
-        
-        newDiv.innerHTML += '<br> <button class="deleteBtn" type ="button" value = "delete" class="delete"> Delete </button> <br> <button class="book-read-btn btn btn-primary">Read</button> '
-
-        newDiv.appendChild(newContent);
-        bookDisplay.appendChild(newDiv) */
-/*         document.body.insertBefore(newDiv,bookDisplay);
- */
