@@ -12,21 +12,8 @@ function Book(Title, Author, Pages, Read) {
 
 //function to add new book to array 
 function addBookToLibrary(Title, Author, Pages, Read){
-    //user input
-   /*  let inputTitle = document.querySelector('#title');
-    let inputAuthor = document.querySelector('#author');
-    let inputPages = document.querySelector('#pages'); */
     let newBook = new Book (Title, Author, Pages, Read)
-   /*  newBook.title = inputTitle.value;
-    newBook.author = inputAuthor.value;
-    newBook.pages = inputPages.value;
- */
     myLibrary.push(newBook)
- /*    console.log(myLibrary)
-    inputTitle.value = ""
-    inputAuthor.value = ""
-    inputPages.value = ""
-    refreshBooklist();  */
     printBooks();
 }
 
@@ -38,40 +25,50 @@ addBookToLibrary("The Hebbit", "295", "JRR Tolkien", "Not read yet") */
 function printBooks(){
     const books = document.querySelector(".bookDisplay");
     //loop over the lib array and send display to the cards 
-    myLibrary.forEach((element, index) =>{
-
-
-
-        const removeDivs = document.querySelectorAll('.card');
+    const removeDivs = document.querySelectorAll('.bookCard');
         for (let i = 0; i<removeDivs.length; i++) {
             removeDivs[i].remove();
         }
+    
+let index = 0; 
+    myLibrary.forEach((element, index) =>{
 
         const card = document.createElement("div");
             card.classList.add("bookCard");
             books.appendChild(card);
 
+        const removeBookButton = document.createElement("button");
+            removeBookButton.classList.add("removeBookButton");
+            removeBookButton.textContent = "Remove from Library";
+            removeBookButton.dataset.linkedArray = index; 
+            index++;
+            card.appendChild(removeBookButton)
+
+
+        //start event listener/remove array item from ARRAY AND card 
+        removeBookButton.addEventListener("click", removeBookFromLibrary)
+
+        function removeBookFromLibrary(){
+            let retrieveBookToRemove = removeBookButton.dataset.linkedArray;
+            myLibrary.splice(parseInt(retrieveBookToRemove), 1);
+            card.remove();
+            printBooks();
+        }
+
+        //loop over the object keys and values and display to each card
         for (let key in element){
             const para = document.createElement("p");
             para.textContent = (`${key}: ${element[key]}`);
             card.appendChild(para);
-            console.table(myLibrary)
         }
     })}
 
-/* 
-const displayForm = (target, trigger) => {
-    if(!target || !trigger) return;
-    let target = addBookButton
-    let defaultDisplay = 
-        window.getComputedStyle(target).getPropertyValue('display')
-        trigger.addEventListener('click', e => {
-            target.style.display = 
-                (target.style.display == 'none')?
-                defaultDisplay:
-                    'none'
-        })
-} */
+//adding a removebook button
+function createRemoveBookButton(){
+   
+}
+
+//display the form when clicking "add new book"
 const addBookButton = document.querySelector(".addBookButton")
 const displayForm = () => {
     document.getElementById("addBookForm").style.display="";
@@ -87,16 +84,18 @@ function intakeFormData(){
     let Title = document.getElementById('title').value;
     let Author = document.getElementById('author').value;
     let Pages = document.getElementById('pages').value; 
-    let Read = document.getElementById('read').value
+    let Read = document.getElementById('read').checked;
+    console.log(Read)
     //Breakout if form not filled
-    if ((Title == "") || (Author == "") || (Pages =="") || (Read =="")){
+    if ((Title == "") || (Author == "") || (Pages =="") ){
         return
     }
-
     //call function to input the data to array
     addBookToLibrary(Title, Author, Pages, Read);
+    console.table(myLibrary)
     //reset the form after successful submission
-    document.getElementById("resetButton").reset
+    document.getElementById("resetButton").reset;
+
 }  
 
 
