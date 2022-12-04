@@ -51,7 +51,8 @@ function printBooks(){
             //give the new div a [data-index] that holds its index in the array)
         const newContent = document.createTextNode( ` ${title} by ${author} , ${pages} pages , ${read} `)
         
-        newDiv.innerHTML += '<br> <button class="deleteBtn" type ="button" value = "delete" class="delete"> Delete </button> <br>'
+        newDiv.innerHTML += '<br> <button class="deleteBtn" type ="button" value = "delete" class="delete"> Delete </button> <br> <button class="book-read-btn btn btn-primary">Read</button> '
+
         newDiv.appendChild(newContent);
         bookDisplay.appendChild(newDiv)
 /*         document.body.insertBefore(newDiv,bookDisplay);
@@ -67,9 +68,7 @@ function printBooks(){
     })
 }
 
-function changeRead(a){
-    myLibrary[a].read = (myLibrary[a].read = "read"? "not read":"read;")
-}
+
 
 
        //add delete button (delete from dom + delete form mylibrary array 
@@ -107,6 +106,23 @@ function addBooktoLibrary(){
     refreshBooklist(); 
 
 }
+function addEvent(){
+    document.querySelectorAll(".book-read-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const bookIndex = e.currentTarget.closest(".bookCard").dataset.id;
+          myLibrary[bookIndex].toggleRead();
+          displayBook();
+        });
+      }); 
+}
+
+
+
+
+
+/* COMMENT OUT 
+
+
 
 
 //prototype Book constructor
@@ -116,12 +132,28 @@ function Book(title, pages, author, read) {
     this.author = author;
     this.read = read;
     
-    function recommendBook(e) {
-        const index = this.parentElement.getAttribute('data-index');
-        myLibrary[this.parentElement.getAttribute('data-index')].recommend();}
-    
 }
 
+Book.prototype.toggleRead = function(){
+    return this.read == "Read" ? (this.read = "Not read yet") : (this.read = "Read.");
+}
+
+
+
+const overlay = document.querySelector(".overlay");
+const bookForm = document.querySelector(".bookForm");
+const addNewBookBtn = document.querySelector(".add");
+const formConfirmBtn = document.querySelector(".form-confirm-btn");
+const formCancelBtn = document.querySelector(".form-cancel-btn");
+
+function toggleOverlayAndForm(e) {
+  e.preventDefault();
+  overlay.classList.toggle("hidden");
+  bookForm.classList.toggle("hidden");
+}
+
+addNewBookBtn.addEventListener("click", toggleOverlayAndForm);
+formCancelBtn.addEventListener("click", toggleOverlayAndForm);
 
 /* function book(title, pages, author, read){
     this.title = title;

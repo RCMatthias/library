@@ -5,31 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <script src="/code.js" defer></script>
+    <script src="/objectConstructors.js" defer></script>
 <link rel="stylesheet" href="/style.css"></head>
 <body>
     <div class="title">
         <h1>L<em class="planet left">i</em>br<em class="planet right">a</em>ry</h1>
     </div>
-    <div class="bookInput">
-        <form method="post"> 
-            <label for="title"> Title: </label>
-            <input type="text" name="title" id="title" oninvalid="this.setCustomValidity('Title cannot be blank')" required placeholder="Book title"><br>
+    <button type ="button" value = "add" class="add"> Add </button>
+    <button type ="button" value = "add" class="add"> Add </button>
 
-            <label for="author"> Author: </label>
-            <input type="text" name="author" id="author" oninvalid="this.setCustomValidity('Author cannot be blank')" required placeholder="Author name"><br>
-            
-            <label for="pages"> Pages: </label>
-            <input type="text" name="pages" id="pages" oninvalid="this.setCustomValidity('Pages cannot be blank')" required placeholder="Number of pages"><br>
-
-            <input type="checkbox" id="read" name="read" value="read" checked>
-            <label for="read">Read?</label>
-
-            <button type ="button" value = "add" class="add"> Add </button>
-            <button type="reset">Reset</button>
-    
-        </form>
-    </div>
+    <div class="bookForm">
+        <button class="addBookButton"> Add New Book </button>
+        <div id ="addBookForm" style = "display:none">
+            <div class="bookInput">
+                <form method="post">
+                    <label for="title"> Title: </label>
+                    <input type="text" name="title" id="title" oninvalid="this.setCustomValidity('Title cannot be blank')" required placeholder="Book title"><br>
+        
+                    <label for="author"> Author: </label>
+                    <input type="text" name="author" id="author" oninvalid="this.setCustomValidity('Author cannot be blank')" required placeholder="Author name"><br>
+        
+                    <label for="pages"> Pages: </label>
+                    <input type="text" name="pages" id="pages" oninvalid="this.setCustomValidity('Pages cannot be blank')" required placeholder="Number of pages"><br>
+        
+                    <input type="checkbox" id="read" name="read" value="read" >
+                    <label for="read">Read?</label>
+        
+                    <button type ="button" value = "add" id="add"> Add </button>
+                    <button type="reset" id="resetButton">Reset</button>
+        
+                </form>
+            </div>
+        </div>
+</div>
 
     <div class="bookDisplay">  </div>
 
